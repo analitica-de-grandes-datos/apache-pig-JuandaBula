@@ -20,3 +20,14 @@ $ pig -x local -f pregunta.pig
 */
 
 
+
+
+data = LOAD 'data.csv' USING PigStorage(',') AS (
+    Id:INT,
+    Name:CHARARRAY,
+    LastName:CHARARRAY,
+    Birth:CHARARRAY,
+    Color:CHARARRAY,
+    Value:INT);
+birthday = FOREACH data GENERATE REGEX_EXTRACT(Birth,'(.*)-(.*)-(.*)', 2);
+STORE birthday INTO 'output' USING PigStorage(',');
